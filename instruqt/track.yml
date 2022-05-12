@@ -1,0 +1,15 @@
+slug: prisma-fundamentals
+id: 8kt5h27lkxlc
+version: 0.0.1
+type: track
+title: Prisma Fundamentals
+teaser: A comprehensive training on Prisma
+description: A comprehensive training on Prisma
+icon: ""
+tags: []
+owner: prisma
+developers:
+- matteson@prisma.io
+private: false
+published: true
+checksum: "12751772727643433837"
