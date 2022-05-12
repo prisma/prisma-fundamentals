@@ -36,27 +36,28 @@ systemctl enable code-server
 systemctl start code-server
 
 # Add Prisma and Terminals VS Code Extensions
-code-server --install-extension prisma.prisma --user-data-dir /user-data
+code-server --install-extension prisma.prisma
 # code-server --install-extension fabiospampinato.vscode-terminals --user-data-dir /user-data
 
-# Automatically open terminal in VS Code
-echo '{
-    "autorun": true,
-    "autokill": true,
-    "terminals": [
-        {
-            "name": "TERMINAL",
-            "description": "For running commands",
-            "open": true,
-            "focus": false,
-            "commands": [
-                "cd /app/typescript/graphql"
-            ]
-        }
-    ]
-}' > /root/training/example-app/.vscode/terminals.json
+# Disable Trusted workspaces
+
+cat <<-EOF > /root/.local/share/code-server/User/settings.json
+{
+    "security.workspace.trust.startupPrompt": "never",
+    "security.workspace.trust.enabled": false,
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.emptyWindow": false
+}
+EOF
 
 # Install Node.js
 # https://github.com/nodesource/distributions/blob/master/README.md
 curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
 apt-get install -y nodejs
+
+# Remove schema file so students can recreate
+rm -rf /root/training/example-app/backend/prisma/
+
+# NPM Install
+cd /root/training/example-app/backend
+npm install

@@ -1,0 +1,23 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Check that Prisma can read schema file
+cd /root/training/example-app/backend/
+ls prisma/schema.prisma || fail-message "schema.prisma file not found"
+npx prisma format || fail-message "schema.prisma file cannot be parsed"
+
+# Check for generator
+cd prisma
+grep generator schema.prisma | grep client || fail-message "generator not configured correctly"
+grep prisma-client-js schema.prisma | grep provider || fail-message "generator not configured correctly"
+grep "../src/generated/client" schema.prisma | grep output || fail-message "generator not configured correctly"
+
+# Check for datasource
+grep datasource schema.prisma | grep db || fail-message "datasource not configured correctly"
+grep "file:./dev.db" schema.prisma | grep url || fail-message "database not configured correctly"
+
+# Check for model
+grep -i User schema.prisma | grep model || fail-message "User model not configured correctly"
+grep id schema.prisma | grep Int | grep @id | grep "@default(autoincrement())" || fail-message "id field not configured correctly"
+grep email schema.prisma | grep String | grep @unique | grep -v ? || fail-message "email field not configure correctly"
+grep name schema.prisma | grep String? || fail-message "name field not configured correctly" 
