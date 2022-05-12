@@ -37,7 +37,7 @@ systemctl start code-server
 
 # Add Prisma and Terminals VS Code Extensions
 code-server --install-extension prisma.prisma --user-data-dir /user-data
-code-server --install-extension fabiospampinato.vscode-terminals --user-data-dir /user-data
+# code-server --install-extension fabiospampinato.vscode-terminals --user-data-dir /user-data
 
 # Automatically open terminal in VS Code
 echo '{
@@ -54,7 +54,7 @@ echo '{
             ]
         }
     ]
-}' > /app/.vscode/terminals.json
+}' > /root/training/example-app/.vscode/terminals.json
 
 # Install Node.js
 # https://github.com/nodesource/distributions/blob/master/README.md
