@@ -1,2 +1,2 @@
-# intro-to-prisma-schema-instruqt-lab
-An Instruqt lab to introduce students to the Prisma Schema
+# Prisma Fundamentals
+An class to teach students how to use Prisma
