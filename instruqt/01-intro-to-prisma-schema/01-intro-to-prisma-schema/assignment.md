@@ -18,20 +18,24 @@ tabs:
 difficulty: basic
 timelimit: 6000
 ---
-Step 1
+Intro
+======
+This training course uses the VSCode Editor.
+To access your terminal press "Ctrl + `" or click:
+* The Hamburger icon in the upper left
+* "View"
+* "Terminal"
+
+To navigate the project click on the files and folders in the File Explorer in the left hand column.
+
+Steps
 ======
 Open a terminal and change directory to /root/training/example-app/backend.
 
-Use `npx prisma init` to create a new schema file.
+Use the proper CLI command to create a new schema file.
 
-Edit the new schema file with VS Code and review the precreated definitions. Modify the generator definition to use the "prisma-client-js" provider and output to "../src/generated/client". Modify the datasource definition to use sqlite at "./dev.db"
+Edit the new schema file with VS Code and review the precreated definitions. Notice that the generator defaults to using the correct "prisma-client-js" provider. Now update the Prisma Schema so that the Prisma Client will output to a folder named "generated/client/" inside the "backend/src" directory". Update the datasource definition to use a SQLite database named dev.db inside the prisma folder
 
-Links:
-https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client
-https://www.prisma.io/docs/concepts/database-connectors/sqlite
-
-Step 2
-======
 Create a model for "User" with the following fields:
 | Field Name | Type   | Attributes           |
 |------------|--------|----------------------|
@@ -40,4 +44,6 @@ Create a model for "User" with the following fields:
 | name       | string | optional             |
 
 Links:
+https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client
+https://www.prisma.io/docs/concepts/database-connectors/sqlite
 https://www.prisma.io/docs/concepts/components/prisma-schema/data-model#optional-and-mandatory-fields

@@ -1,6 +1,10 @@
 #!/bin/bash
 set -euxo pipefail
 
+# Run prisma init
+cd /root/training/example-app/backend
+npx prisma init
+
 # Create schema file
 cat <<-EOF > /root/training/example-app/backend/prisma/schema.prisma
 generator client {
