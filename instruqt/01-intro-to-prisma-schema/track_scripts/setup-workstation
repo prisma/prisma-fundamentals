@@ -10,38 +10,17 @@ do
 done
 
 # Clone training repository
-git clone https://github.com/prisma/prisma-fundamentals.git /root/training
+git clone https://github.com/prisma/prisma-fundamentals.git /app
 
-# Install Code server
-curl -fsSL https://code-server.dev/install.sh | sh
-
-# Create Code Server startup script
-cat <<-EOF > /etc/systemd/system/code-server.service
-[Unit]
-Description=Code Server
-After=network.target
-StartLimitIntervalSec=0
-[Service]
-Type=simple
-Restart=always
-RestartSec=1
-User=root
-ExecStart=/usr/bin/code-server --host 0.0.0.0 --port 8443 --cert --auth none /root/training/example-app
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Start Code Server
-systemctl enable code-server
-systemctl start code-server
+# Remove git repo to prevent VS Code from showing prior versions
+rm -rf /app/.git
 
 # Add Prisma and Terminals VS Code Extensions
-code-server --install-extension prisma.prisma
+code-server --install-extension prisma.prisma --user-data-dir /user-data
 # code-server --install-extension fabiospampinato.vscode-terminals --user-data-dir /user-data
 
 # Disable Trusted workspaces
-
-cat <<-EOF > /root/.local/share/code-server/User/settings.json
+cat <<-EOF > /user-data/User/settings.json
 {
     "security.workspace.trust.startupPrompt": "never",
     "security.workspace.trust.enabled": false,
@@ -56,8 +35,8 @@ curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
 apt-get install -y nodejs
 
 # Remove schema file so students can recreate
-rm -rf /root/training/example-app/backend/prisma/
+rm -rf /app/example-app/backend/prisma/
 
 # NPM Install
-cd /root/training/example-app/backend
+cd /app/example-app/backend
 npm install

@@ -3,11 +3,21 @@ slug: intro-to-prisma-schema
 id: kgmexi8se4ql
 type: challenge
 title: Intro to Prisma Schema
+notes:
+- type: text
+  contents: |
+    This training course uses the VSCode Editor.
+    To access your terminal press "Ctrl + `" or click:
+    * The Hamburger icon in the upper left
+    * "View"
+    * "Terminal"
+
+    To navigate the project click on the files and folders in the File Explorer in the left hand column.
 tabs:
 - title: Code Editor
   type: service
   hostname: workstation
-  port: 8443
+  port: 8080
 - title: Terminal
   type: terminal
   hostname: workstation
@@ -30,13 +40,10 @@ To navigate the project click on the files and folders in the File Explorer in t
 
 Steps
 ======
-Open a terminal and change directory to /root/training/example-app/backend.
-
-Use the proper CLI command to create a new schema file.
-
-Edit the new schema file with VS Code and review the precreated definitions. Notice that the generator defaults to using the correct "prisma-client-js" provider. Now update the Prisma Schema so that the Prisma Client will output to a folder named "generated/client/" inside the "backend/src" directory". Update the datasource definition to use a SQLite database named dev.db inside the prisma folder
-
-Create a model for "User" with the following fields:
+0. Open a terminal and change directory to /root/training/example-app/backend.
+1. Use the proper CLI command to create a new schema file.
+1. Edit the new schema file with VS Code and review the precreated definitions. Notice that the generator defaults to using the correct "prisma-client-js" provider. Now update the Prisma Schema so that the Prisma Client will output to a folder named "generated/client/" inside the "backend/src" directory". Update the datasource definition to use a SQLite database named dev.db inside the prisma folder
+1. Create a model for "User" with the following fields:
 | Field Name | Type   | Attributes           |
 |------------|--------|----------------------|
 | id         | int    | id and autoincrement |
