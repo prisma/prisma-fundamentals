@@ -14,7 +14,10 @@ notes:
     When you believe you have completed all of the steps click the "Check" button on the instruction panel to check your work. If Instruqt find something not completed correctly, it will provide you with a warning message at the bottom. You can then fix the issue and use the Check button again as many times as necessary.
 - type: text
   contents: |
-    This training course uses the VSCode Editor. The application for this lab is opened in VSCode at app/example-app. There is a terminal window for running commands built-in to VSCode at the bottom right. The Prisma VSCode plugin is already loaded to provide syntax highlighting in the Prisma Schema.
+    This training course uses the VSCode Editor. The application for this lab is opened in VSCode. There is a terminal window for running commands built-in to VSCode at the bottom right. The Prisma VSCode plugin is already loaded to provide syntax highlighting in the Prisma Schema.
+- type: text
+  contents: |
+    This lab is designed to encourage the use of Prisma's docs. Skim or search through the docs linked after each step to find the necessary information to solve that step.
 tabs:
 - title: Code Editor
   type: service
@@ -29,7 +32,7 @@ timelimit: 6000
 ---
 Intro
 ======
-This training course uses the VSCode Editor. The application for this lab is opened in VSCode at app/example-app. To navigate the project click on the files and folders in the File Explorer in the left hand column. There is a terminal window for running commands built-in to VSCode at the bottom right.
+To navigate the project click on the files and folders in the File Explorer in the left hand column. There is a terminal window for running commands built-in to VSCode at the bottom right.
 
 Click on the Steps bar below to expand the section and see the steps to complete. Once you believe you've completed all the steps, click the Check button in the bottom right of this instruction panel to check your work.
 
@@ -44,4 +47,5 @@ Steps
 | id         | int    | id and autoincrement |
 | email      | string | unique               |
 | name       | string | optional             |
+
 Docs: [Data Model](https://www.prisma.io/docs/concepts/components/prisma-schema/data-model)

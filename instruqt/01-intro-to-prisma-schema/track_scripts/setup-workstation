@@ -10,7 +10,8 @@ do
 done
 
 # Clone training repository
-git clone https://github.com/prisma/prisma-fundamentals.git /app
+git clone https://github.com/prisma/prisma-fundamentals.git
+mv ./prisma-fundamentals/example-app /app
 
 # Remove git repo to prevent VS Code from showing prior versions
 rm -rf /app/.git
