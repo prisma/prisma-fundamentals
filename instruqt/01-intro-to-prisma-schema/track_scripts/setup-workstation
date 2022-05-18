@@ -17,7 +17,7 @@ rm -rf /app/.git
 
 # Add Prisma and Terminals VS Code Extensions
 code-server --install-extension prisma.prisma --user-data-dir /user-data
-# code-server --install-extension fabiospampinato.vscode-terminals --user-data-dir /user-data
+code-server --install-extension fabiospampinato.vscode-terminals --user-data-dir /user-data
 
 # Disable Trusted workspaces
 cat <<-EOF > /user-data/User/settings.json
