@@ -6,7 +6,7 @@ title: Intro to Prisma Schema
 notes:
 - type: text
   contents: |
-    This training course is built on Instruqt. The training environment is being built now. Click Next using the button in the bottom right through the instruction slides and then click start at that same location once the environment has loaded.
+    This training course is built on Instruqt. The training environment is being built now. Use the left and right buttons to navigate the instruction slides and then click start at that bottom right once the environment has loaded.
 - type: text
   contents: |
     Instruqt includes instructions in a panel on the right, you can minimize that panel using the > arrow at the top of the panel. There are two tabs which you can click between, one for VSCode, and the other for interacting with the application once you've reached a lab where it has loaded.
