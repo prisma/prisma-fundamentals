@@ -6,21 +6,20 @@ title: Intro to Prisma Schema
 notes:
 - type: text
   contents: |
-    This training course uses the VSCode Editor.
-    To access your terminal press "Ctrl + `" or click:
-    * The Hamburger icon in the upper left
-    * "View"
-    * "Terminal"
+    This training course is built on Instruqt. The training environment is being built now. Click Next using the button in the bottom right through the instruction slides and then click start at that same location once the environment has loaded.
+- type: text
+  contents: |
+    Instruqt includes instructions in a panel on the right, you can minimize that panel using the > arrow at the top of the panel. There are two tabs which you can click between, one for VSCode, and the other for interacting with the application once you've reached a lab where it has loaded.
 
-    To navigate the project click on the files and folders in the File Explorer in the left hand column.
+    When you believe you have completed all of the steps click the "Check" button on the instruction panel to check your work. If Instruqt find something not completed correctly, it will provide you with a warning message at the bottom. You can then fix the issue and use the Check button again as many times as necessary.
+- type: text
+  contents: |
+    This training course uses the VSCode Editor. The application for this lab is opened in VSCode at app/example-app. There is a terminal window for running commands built-in to VSCode at the bottom right. The Prisma VSCode plugin is already loaded to provide syntax highlighting in the Prisma Schema.
 tabs:
 - title: Code Editor
   type: service
   hostname: workstation
   port: 8080
-- title: Terminal
-  type: terminal
-  hostname: workstation
 - title: App
   type: service
   hostname: workstation

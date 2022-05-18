@@ -8,7 +8,7 @@
             "open": true,
             "focus": false,
             "commands": [
-                "cd /app/typescript/graphql"
+                "cd /app/example-app"
             ]
         }
     ]
