@@ -2,11 +2,11 @@
 set -euxo pipefail
 
 # Run prisma init
-cd /app/example-app/backend
+cd /app/backend
 npx prisma init
 
 # Create schema file
-cat <<-EOF > /app/example-app/backend/prisma/schema.prisma
+cat <<-EOF > /app/backend/prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/client"

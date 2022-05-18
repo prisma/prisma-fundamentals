@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 # Check that Prisma can read schema file
-cd /app/example-app/backend/
+cd /app/backend/
 ls prisma/schema.prisma || fail-message "schema.prisma file not found"
 npx prisma format || fail-message "schema.prisma file cannot be parsed"
 
