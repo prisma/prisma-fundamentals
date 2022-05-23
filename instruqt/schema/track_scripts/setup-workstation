@@ -32,6 +32,9 @@ EOF
 curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
 apt-get install -y nodejs
 
+# Install jq
+apt-get install -y jq
+
 # Remove schema file so students can recreate
 rm -rf /app/backend/prisma/
 

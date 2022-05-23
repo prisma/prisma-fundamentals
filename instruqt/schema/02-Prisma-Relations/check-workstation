@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Check that Prisma can read schema file
+cd /app/backend/
+ls prisma/schema.prisma || fail-message "schema.prisma file not found"
+npx prisma format || fail-message "schema.prisma file cannot be parsed"
+
+# Check Post model
+cd prisma
+cat <<-EOF > /tmp/returnDMMF.js
+import pkg from '@prisma/sdk';
+const { getDMMF, getSchema, getSchemaPath } = pkg;
+
+const schemaPath = (await getSchemaPath())
+const datamodel = await getSchema(schemaPath)
+const dmmf = await getDMMF({datamodel: datamodel})
+
+console.log(JSON.stringify(dmmf))
+EOF
+cat <<-EOF > /tmp/package.json
+{
+  "type": "module",
+  "dependencies": {
+    "@prisma/sdk": "^3.14.0"
+  }
+}
+EOF
+DMMF=$(node /tmp/returnDMMF.js)
+[[ "Post" == $(echo $DMMF | jq '.datamodel.models[] | select(.name=="Post")'.name)]] || fail-message "Post model not found"
+[[ "Int" == $(echo $DMMF | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="id")'.type)]]

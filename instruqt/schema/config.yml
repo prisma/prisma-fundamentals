@@ -8,3 +8,7 @@ containers:
   ports:
   - 8080
   - 3000
+- name: mysql
+  image: mysql
+  ports:
+  - 3306
