@@ -14,7 +14,7 @@ grep "../src/generated/client" schema.prisma | grep output || fail-message "gene
 
 # Check for datasource
 grep datasource schema.prisma | grep db || fail-message "datasource not configured correctly"
-grep -i mysql schema.prisma | grep provider || fail-message "datasource not configured correctly"
+grep mysql schema.prisma | grep provider || fail-message "datasource not configured correctly"
 grep 'env("DATABASE_CONNECTION")' schema.prisma | grep url || fail-message "database not configured correctly"
 
 # Check for model

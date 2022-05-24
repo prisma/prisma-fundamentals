@@ -6,8 +6,7 @@ cd /app/backend/
 ls prisma/schema.prisma || fail-message "schema.prisma file not found"
 npx prisma format || fail-message "schema.prisma file cannot be parsed"
 
-# Check Post model
-cd prisma
+# Setup scripts to parse DMMF
 cat <<-EOF > /tmp/returnDMMF.js
 import pkg from '@prisma/sdk';
 const { getDMMF, getSchema, getSchemaPath } = pkg;
@@ -26,6 +25,12 @@ cat <<-EOF > /tmp/package.json
   }
 }
 EOF
-DMMF=$(node /tmp/returnDMMF.js)
-[[ "Post" == $(echo $DMMF | jq '.datamodel.models[] | select(.name=="Post")'.name)]] || fail-message "Post model not found"
-[[ "Int" == $(echo $DMMF | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="id")'.type)]]
+cd /tmp
+npm install
+cd /app/backend
+node /tmp/returnDMMF.js > /tmp/DMMF.json
+
+# Check Post model
+DATABASE_CONNECTION="mysql://mysql"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post")'.name | grep "Post" || fail-message "Post model not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="id")'.type | grep "Int" || fail-message "id Type is incorrect"

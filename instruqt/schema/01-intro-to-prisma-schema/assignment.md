@@ -1,6 +1,6 @@
 ---
 slug: intro-to-prisma-schema
-id: kgmexi8se4ql
+id: dh8nvhpvbvpz
 type: challenge
 title: Intro to Prisma Schema
 notes:
@@ -28,7 +28,7 @@ tabs:
   hostname: workstation
   port: 3000
 difficulty: basic
-timelimit: 6000
+timelimit: 600
 ---
 Intro
 ======

@@ -17,6 +17,7 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+  posts Post[]
 }
 
 model Post {
@@ -31,4 +32,9 @@ model Post {
   authorId  Int?
 }
 
+enum Role {
+  VIEWER
+  EDITOR
+  ADMIN
+}
 EOF

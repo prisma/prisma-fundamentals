@@ -1,6 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "@prisma/sdk": "^3.14.0"
-  }
-}

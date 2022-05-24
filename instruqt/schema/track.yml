@@ -1,16 +1,18 @@
-slug: intro-to-prisma-schema
-id: yz9csr07cqvy
-version: 0.0.1
+slug: prisma-schema
+id: w7xs61whycrw
 type: track
-title: Intro to Prisma Schema
-teaser: An introduction to the Prisma Schema
-description: An introduction to the Prisma Schema
+title: Prisma Schema
+teaser: Apply concepts of the Prisma Schema
+description: Apply concepts of the Prisma Schema
 icon: ""
 tags:
 - Fundamentals
 owner: prisma
 developers:
 - matteson@prisma.io
+- carlson@prisma.io
+- adams@prisma.io
 private: false
 published: true
-checksum: "920442830021264735"
+skipping_enabled: true
+checksum: "3412313315983474884"

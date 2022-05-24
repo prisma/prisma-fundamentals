@@ -4,6 +4,7 @@ set -euxo pipefail
 # Run prisma init
 cd /app/backend
 npx prisma init
+sleep 1
 
 # Create schema file
 cat <<-EOF > /app/backend/prisma/schema.prisma
@@ -13,8 +14,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = env("DATABASE_CONNECTION")
 }
 
 model User {
