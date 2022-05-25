@@ -15,7 +15,6 @@ tabs:
 difficulty: basic
 timelimit: 6000
 ---
-
 Steps
 ======
 1. Add Post model to the schema with the following fields. Note the author field is related to User model, which requires updating of the User model as well. Docs: [Data Model](https://www.prisma.io/docs/concepts/components/prisma-schema/data-model) [Relations](https://www.prisma.io/docs/concepts/components/prisma-schema/relations)

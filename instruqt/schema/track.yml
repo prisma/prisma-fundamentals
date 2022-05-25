@@ -9,10 +9,10 @@ tags:
 - Fundamentals
 owner: prisma
 developers:
-- matteson@prisma.io
 - carlson@prisma.io
 - adams@prisma.io
+- matteson@prisma.io
 private: false
 published: true
 skipping_enabled: true
-checksum: "3412313315983474884"
+checksum: "14767223285267372532"

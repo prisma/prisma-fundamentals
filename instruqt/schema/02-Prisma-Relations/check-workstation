@@ -31,6 +31,50 @@ cd /app/backend
 node /tmp/returnDMMF.js > /tmp/DMMF.json
 
 # Check Post model
+# Need to provide a value for this environment variable to generate the DMMF
 DATABASE_CONNECTION="mysql://mysql"
-cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post")'.name | grep "Post" || fail-message "Post model not found"
-cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="id")'.type | grep "Int" || fail-message "id Type is incorrect"
+# Check Post Model
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post")'.name | grep -w "Post" || fail-message "Post model not found"
+# Check id field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="id")' | grep -v '^$' || "id field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="id")'.type | grep -w "Int" || fail-message "id field type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="id")'.default.name | grep -w "autoincrement" || fail-message "id fieldis not autoincrementing"
+# Check createdAt field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="createdAt")' | grep -v '^$' || "createdAt field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="createdAt")'.type | grep -w "DateTime" || fail-message "createdAt field type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="createdAt")'.default.name | grep -w "now" || fail-message "createdAt field is not set to default to now"
+# Check updatedAt field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="updatedAt")' | grep -v '^$' || "updatedAt field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="updatedAt")'.type | grep -w "DateTime" || fail-message "updatedAt field type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="updatedAt")'.isUpdatedAt | grep -w true || fail-message "updatedAt field is not using the correct annotation"
+# Check title field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="title")' | grep -v '^$' || "title field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="title")'.type | grep -w "String" || fail-message "title field type is incorrect"
+# Check content field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="content")' | grep -v '^$' || "content field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="content")'.type | grep -w "String" || fail-message "content field type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="content")'.isRequired | grep -w false || fail-message "content field is not optional"
+# Check published field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="published")' | grep -v '^$' || "published field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="published")'.type | grep -w "Boolean" || fail-message "published field type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="published")'.default | grep -w false || fail-message "published field is not defaulting to correct value"
+# Check viewCount field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="viewCount")' | grep -v '^$' || "viewCount field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="viewCount")'.type | grep -w "Int" || fail-message "viewCount field type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="viewCount")'.default | grep -w 0 || fail-message "viewCount field is not defaulting to correct value"
+# Check author field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="author")' | grep -v '^$' || "author field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="author")'.type | grep -w "User" || fail-message "author field type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="author")'.relationName | grep -w "PostToUser" || fail-message "Relation from Post to User models not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="author")'.relationFromFields[0] | grep -w "authorId" || fail-message "Relation from field not set correctly"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="author")'.relationToFields[0] | grep -w "id" || fail-message "Relation to field not set correctly"
+# Check posts field in User model
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="User").fields[] | select(.name=="posts")' | grep -v '^$' || "posts field in User model not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="User").fields[] | select(.name=="posts")'.type | grep -w "Post" || fail-message "posts field in User model type is incorrect"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="User").fields[] | select(.name=="posts")'.isList | grep -w true || fail-message "posts field in User model is not a list"
+# Check authorId field
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="authorId")' | grep -v '^$' || "authorId field not found"
+cat /tmp/DMMF.json | jq '.datamodel.models[] | select(.name=="Post").fields[] | select(.name=="authorId")'.type | grep -w "Int" || fail-message "authorId field type is incorrect"
+# Check enum
+cat /tmp/DMMF.json | jq '.datamodel.enums[] | select(.name=="Role")'.name | grep -w "Role" || fail-message "Role enum not found"
+cat /tmp/DMMF.json | jq '.datamodel.enums[] | select(.name=="Role")'.values[].name | tr -d '\n' | grep -w "VIEWER" | grep -w "EDITOR" | grep -w "ADMIN" || fail-message "Role enum values not set correctly"

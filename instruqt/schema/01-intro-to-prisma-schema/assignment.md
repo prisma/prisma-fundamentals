@@ -18,6 +18,9 @@ notes:
 - type: text
   contents: |
     This lab is designed to encourage the use of Prisma's docs. Skim or search through the docs linked after each step to find the necessary information to solve that step.
+- type: text
+  contents: |
+    Click the green start button below once it appears. Note that VS Code takes a few seconds to load after the rest of the training environment has appeared.
 tabs:
 - title: Code Editor
   type: service
@@ -30,13 +33,6 @@ tabs:
 difficulty: basic
 timelimit: 600
 ---
-Intro
-======
-To navigate the project click on the files and folders in the File Explorer in the left hand column. There is a terminal window for running commands built-in to VSCode at the bottom right.
-
-Click on the Steps bar below to expand the section and see the steps to complete. Once you believe you've completed all the steps, click the Check button in the bottom right of this instruction panel to check your work.
-
-
 Steps
 ======
 1. Use the proper CLI command to create a new schema file. Docs: [Command Reference](https://www.prisma.io/docs/reference/api-reference/command-reference)
