@@ -13,7 +13,7 @@ tabs:
   hostname: workstation
   port: 3000
 difficulty: basic
-timelimit: 6000
+timelimit: 600
 ---
 Steps
 ======
