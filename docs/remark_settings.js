@@ -3,8 +3,10 @@ remark.macros.scale = function (percentage) {
   return '<img src="' + url + '" style="width: ' + percentage + '" />';
 };
 var slideshow = remark.create({
-  ratio: '4:3',
-  highlightStyle: 'tomorrow-night-bright',
-  highlightLines: 'true',
-  sourceUrl: './slides.md'
+  ratio: "4:3",
+  highlightStyle: "tomorrow-night-bright",
+  highlightLines: "true",
+  sourceUrl: "./slides.md",
 });
+
+addEventListener("resize", (event) => {});
