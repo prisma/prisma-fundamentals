@@ -14,7 +14,7 @@ img.logo {
 }
 
 ol {
-    list-style-position: inside;
+    list-style-position: outside;
 }
 
 ol > li,ul > li {
@@ -48,7 +48,40 @@ code {
     background: #4c52bf1c;
     border-radius: 1rem;
     padding: 2px 10px;
-  }
+}
+
+blockquote {
+    background: #ebebeb;
+    padding: 0.8rem;
+    margin: 1rem 0;
+    color: #918f9c;
+    font-size: 15px;
+    border-left: 3px solid #4C51BF;
+    border-radius: 2px;
+}
+
+
+table {
+    margin: auto;
+    border-spacing: 0;
+    border: 2px solid #474554;
+    border-radius: 1rem;
+    min-width: 80%;
+    font-size: 0.8rem;
+}
+
+table td {
+  border-top: 1px solid #474554;
+  border-right: 1px solid #474554;
+  vertical-align: top;
+  padding: 1rem;
+}
+
+table th {
+    border-right: 1px solid #474554;
+    padding: 1rem;
+}
+
 .sub-middle {
     position: absolute;
     width: 100%;
@@ -59,6 +92,13 @@ code {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.required {
+    font-style: italic;
+    color: rgb(218, 136, 136);
+    font-size: 0.7rem;
+    vertical-align: top;
 }
 /* Remark Overrides */
 .remark-slide-scaler {

@@ -7,7 +7,6 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
 if (!urlParams.get("section")) {
-  alert(window.location);
   window.location = "/training/index.html?section=schema";
 }
 
