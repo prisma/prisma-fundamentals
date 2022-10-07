@@ -514,3 +514,8 @@ model Star {
   circle   Unsupported("circle")? @default(dbgenerated("'<(10,4),11>'::circle"))
 }
 ```
+
+---
+
+### Data Type Modifiers
+
