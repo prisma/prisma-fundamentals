@@ -519,3 +519,267 @@ model Star {
 
 ### Data Type Modifiers
 
+In some cases, your data may be optionally stored or stored as an array. In these cases, you can use data type modifiers to specify that behavior.
+
+---
+
+### Data Type Modifiers - Optional Fields
+
+
+In the example below, the `age` field is denoted as _optional_ by adding the `?` type modifier after the `Int` data type:
+
+```graphql
+model User {
+  id        Int      @id @default(autoincrement())
+  age       Int?
+}
+```
+
+---
+
+### Data Type Modifiers - Lists
+
+
+In the example below, the `quotes` field is denoted as a _scalar list_ by adding the `[]` type modifier after the `String` data type:
+
+```graphql
+model User {
+  id        Int      @id @default(autoincrement())
+  quotes    String[]
+}
+```
+
+_For more information on data type modifiers, refer to the [docs](https://www.prisma.io/docs/concepts/components/prisma-schema/data-model#type-modifiers)._
+
+---
+
+layout: false
+
+class: middle, center
+
+## Relations
+
+---
+
+layout: true
+
+## Relations
+
+---
+
+Relations between models are defined directly within the model blocks themselves using the `@relation` attribute.
+
+--
+
+<br />
+You may define many different kinds of relations:
+
+.center[
+
+![:scale 80%](./images/sample-schema.png)
+
+]
+
+---
+
+layout: true
+
+## Relations
+
+### 1 - 1
+
+```graphql
+model User {
+  id      Int      @id @default(autoincrement())
+*  profile Profile?
+}
+
+model Profile {
+  id     Int  @id @default(autoincrement())
+*  userId Int  @unique
+*  user   User @relation(fields: [userId], references: [id])
+}
+```
+---
+
+You may define a *1-1* relationship between two models using a relationship similar to the one shown above.
+
+---
+
+Here we have a `User` model. Each *user* can have a single `Profile` associated with it. 
+
+---
+
+In order to define the relationship, you need a field on the `Profile` model that references a field on the `User` model using the `@relation` attribute.
+
+---
+
+You must define the relation on both models, adding fields of the appropriate model types on each model.
+
+---
+
+Here, the `user` field on the `Profile` model is of the type `User` and the `profile` field on the `User` model is of the type `Profile`.
+
+---
+
+layout: true
+
+## Relations
+
+### 1 - N
+
+```graphql
+model User {
+  id      Int      @id @default(autoincrement())
+*  posts Post[]
+}
+
+model Post {
+  id     Int  @id @default(autoincrement())
+*  userId Int  @unique
+*  user   User @relation(fields: [userId], references: [id])
+}
+```
+
+---
+
+These relationships are defined in a way that is very similar to a 1-1 relation. 
+<br/>
+In the above relationship, a `User` may have many associated `Post` records.
+---
+
+The primary difference in the relation definition is that the `posts` field on the `User` model is defined as a *list*.
+
+---
+
+layout: true
+
+## Relations
+
+
+---
+
+### M - N
+
+*many-to-many* relationships may be defined in two ways: explicitly and implicitly.
+
+--
+
+<br/>
+In an *explicit* many-to-many relationship, the relation table that links the two related tables is defined in the Prisma Schema.
+
+--
+
+<br/>
+In an *implicit* many-to-many relationship, the relation table that links the two related tables is handled under the hood by Prisma.
+
+---
+
+### *Explicit* M-N
+
+```graphql
+model Post {
+  id         Int           @id @default(autoincrement())
+  categories TagsOnPosts[]
+}
+
+model Tag {
+  id    Int           @id @default(autoincrement())
+  posts TagsOnPosts[]
+}
+
+model TagsOnPosts {
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  Int
+
+  @@id([postId, tagId])
+}
+```
+---
+
+### *Implicit* M-N
+```graphql
+model Post {
+  id   Int   @id @default(autoincrement())
+  tags Tag[]
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  posts Post[]
+}
+```
+
+--
+
+*For more about relations and how to customize them further, refer to the [documentation](https://www.prisma.io/docs/concepts/components/prisma-schema/relations).*
+
+---
+
+layout: false
+
+class: middle, center
+
+## Enums
+
+---
+
+layout: true
+
+## Enums
+
+---
+
+Enums are possible to define in your Prisma Schema using the `enum` block so long as your underlying database supports them. 
+
+```graphql
+model User {
+  id   Int  @id @default(autoincrement())
+  role Role @default(GUEST)
+}
+
+enum Role {
+  ADMIN
+  USER
+  GUEST
+}
+```
+
+*See a list of database connectors that support Enums [here](https://www.prisma.io/docs/reference/database-reference/database-features#misc).*
+
+---
+
+layout: false
+
+class: middle, center
+
+## Composite Types
+
+---
+
+layout: true
+
+## Composite Types
+
+---
+
+*Composite Types* allow you to embed records within other records. These are similar in composition to a `model` block and can be defined using the `type` block.
+
+```graphql
+model Product {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  photos Photo[]
+}
+
+type Photo {
+  height Int
+  width  Int
+  url    String
+}
+```
+
+> *This feature is currently only available for MongoDB.*
+

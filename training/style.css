@@ -108,3 +108,9 @@ table th {
 .remark-container {
     background: rgb(236, 236, 236) !important;
 }
+.remark-code-line-highlighted {
+    background-color: rgb(76 81 191 / 48%);
+    padding: 3px 0;
+    border-radius: 8px;
+    transform: translateX(-10px);
+}
