@@ -1,0 +1,206 @@
+#!/bin/bash
+set -euxo pipefail
+
+echo "Running track setup script on host docker-vm"
+
+# Wait for the Instruqt host bootstrap to finish
+until [ -f /opt/instruqt/bootstrap/host-bootstrap-completed ]
+do
+    sleep 1
+done
+
+# Add Prisma and Terminals VS Code Extensions
+code-server --install-extension prisma.prisma --user-data-dir /user-data
+code-server --install-extension fabiospampinato.vscode-terminals --user-data-dir /user-data
+
+# Disable Trusted workspaces
+cat <<-EOF > /user-data/User/settings.json
+{
+    "security.workspace.trust.startupPrompt": "never",
+    "security.workspace.trust.enabled": false,
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.emptyWindow": false
+}
+EOF
+
+# Make app directory
+mkdir /app
+
+# Setup terminal
+mkdir /app/.vscode
+cat <<-EOF > /app/.vscode/terminals.json
+{
+    "autorun": true,
+    "autokill": true,
+    "terminals": [
+        {
+            "name": "TERMINAL",
+            "description": "For running commands",
+            "open": true,
+            "focus": false,
+            "commands": [
+                "cd /app/"
+            ]
+        }
+    ]
+}
+EOF
+
+# Install Node.j,, jq
+# https://github.com/nodesource/distributions/blob/master/README.md
+curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+apt-get install -y nodejs jq
+
+# Globally install ts-node
+npm i -g ts-node typescript @types/node
+
+# NPM Install
+cd /app/
+npm init -y
+npm install prisma
+
+# Run prisma init
+npx prisma init
+sleep 1
+
+# Create schema file
+cat <<-EOF > /app/prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_CONNECTION")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  role  Role    @default(VIEWER)
+  posts Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String?
+  published Boolean  @default(false)
+  viewCount Int      @default(0)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+enum Role {
+  VIEWER
+  EDITOR
+  ADMIN
+}
+EOF
+
+# Make /app/src directory
+mkdir /app/src
+
+# Export Connection String
+export DATABASE_CONNECTION=mysql://root:mysql@mysql:3306/mydb
+echo 'export DATABASE_CONNECTION=mysql://root:mysql@mysql:3306/mydb' >> ~/.bashrc
+
+# Generate Client
+npx prisma generate
+
+# Seed Database
+cat <<-'EOF' > /app/prisma/seed.ts
+import { PrismaClient, Prisma } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+const userData: Prisma.UserCreateInput[] = [
+  {
+    name: 'Andrew',
+    email: 'carlson@prisma.io',
+    posts: {
+      create: [
+        {
+          title: 'Join the Prisma Slack',
+          content: 'https://slack.prisma.io',
+          published: true,
+        },
+      ],
+    },
+  },
+  {
+    name: 'Unknown',
+    email: 'cung@prisma.io',
+    posts: {
+      create: [
+        {
+          title: 'Follow Prisma on Twitter',
+          content: 'https://www.twitter.com/prisma',
+          published: true,
+          viewCount: 42,
+        },
+      ],
+    },
+  },
+  {
+    name: 'Chris',
+    email: 'matteson@prisma.io',
+    posts: {
+      create: [
+        {
+          title: 'Ask a question about Prisma on GitHub',
+          content: 'https://www.github.com/prisma/prisma/discussions',
+          published: true,
+          viewCount: 128,
+        },
+        {
+          title: 'Prisma on YouTube',
+          content: 'https://pris.ly/youtube',
+        },
+      ],
+    },
+  },
+]
+
+async function main() {
+  console.log(`Start seeding ...`)
+  for (const u of userData) {
+    const user = await prisma.user.create({
+      data: u,
+    })
+  }
+  console.log(`Seeding finished.`)
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
+EOF
+
+# Create seed script in package.json
+truncate -s-3 /app/package.json
+cat <<-EOF >> /app/package.json
+,
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}
+EOF
+
+# Seed database
+npx prisma migrate dev -n dev
+
+# Delete Prisma Client so students can generate it
+rm -rf /app/node_modules/.prisma
+
+# Remove schema file so students can recreate
+rm -rf /app/prisma/

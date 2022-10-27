@@ -1,0 +1,17 @@
+slug: client-actions
+id: u4hrdtimnnqi
+title: Client Actions
+teaser: Learn how to perform reads and writes
+description: Learn how to perform reads and writes
+icon: ""
+tags:
+- Fundamentals
+owner: prisma
+developers:
+- carlson@prisma.io
+- adams@prisma.io
+- matteson@prisma.io
+private: false
+published: true
+skipping_enabled: true
+checksum: "18177110049492689997"

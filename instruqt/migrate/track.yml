@@ -1,0 +1,16 @@
+slug: prisma-migrate
+type: track
+title: Prisma Migrate
+teaser: Apply concepts of Prisma Migrate
+description: Apply concepts of Prisma Migrate
+icon: ""
+tags:
+- Fundamentals
+owner: prisma
+developers:
+- carlson@prisma.io
+- adams@prisma.io
+- matteson@prisma.io
+private: false
+published: true
+skipping_enabled: true

@@ -1,0 +1,153 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Create /app/src/readOne.ts
+cat <<-EOF > /app/src/readOne.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: 1,
+    },
+  })
+  console.log(user)
+}
+
+main()
+EOF
+
+# Create /app/src/readMany.ts
+cat <<-EOF > /app/src/readMany.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const users = await prisma.user.findMany({
+    where: {
+      email: {
+        endsWith: "prisma.io"
+      }
+    },
+  })
+  console.log(users)
+}
+
+main()
+EOF
+
+# Create createUser.ts
+cat <<-EOF > /app/src/createUser.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const user = await prisma.user.create({
+    data: {
+      email: 'student@prisma.io',
+      name: 'Prisma Student',
+    },
+  })
+  console.log(user)
+}
+
+main()
+EOF
+
+# Create createPost.ts
+cat <<-EOF > /app/src/createPost.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const post = await prisma.post.create({
+    data: {
+      authorId: 4,
+      title: 'Created with Prisma!',
+      content: 'This was too easy!',
+    },
+  })
+  console.log(post)
+}
+
+main()
+EOF
+
+# Create updateUser.ts
+cat <<-EOF > /app/src/updateUser.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const user = await prisma.user.update({
+    where: {
+      email: 'cung@prisma.io',
+    },
+    data: {
+      name: 'Anita',
+    },
+  })
+  console.log(user)
+}
+
+main()
+EOF
+
+# Create updateUsers.ts
+cat <<-EOF > /app/src/updateUsers.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const updateUsers = await prisma.user.updateMany({
+    where: {
+      email: {
+        contains: 'prisma.io',
+      },
+    },
+    data: {
+      role: 'EDITOR',
+    },
+  })
+  console.log(updateUsers)
+}
+
+main()
+EOF
+
+# Create deletePosts.ts
+cat <<-EOF > /app/src/deletePosts.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function findUserId() {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: "matteson@prisma.io",
+    },
+  })
+  return(user!.id)
+}
+
+async function main() {
+  const userId = await findUserId()
+  const posts = await prisma.post.deleteMany({
+    where: {
+      authorId: {
+        equals: userId,
+      },
+    },
+  })
+  console.log(posts)
+}
+
+main()
+EOF

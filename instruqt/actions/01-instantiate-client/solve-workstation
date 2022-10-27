@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Run prisma generate
+cd /app
+npx prisma generate
+
+# Create /app/src/index.ts with instantiated client
+cat <<-EOF > /app/src/index.ts
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
+EOF

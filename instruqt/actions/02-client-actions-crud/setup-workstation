@@ -1,0 +1,108 @@
+#!/bin/bash
+set -euxo pipefail
+
+echo "Setting up files for crud"
+
+# Create readOne.ts
+cat <<-EOF > /app/src/readOne.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  //Insert here.
+  console.log(user)
+}
+
+main()
+EOF
+
+# Create readMany.ts
+cat <<-EOF > /app/src/readMany.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  //Insert here.
+  console.log(users)
+}
+
+main()
+EOF
+
+# Create createUser.ts
+cat <<-EOF > /app/src/createUser.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  //Insert here.
+  console.log(user)
+}
+
+main()
+EOF
+
+# Create createPost.ts
+cat <<-EOF > /app/src/createPost.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  //Insert here.
+  console.log(post)
+}
+
+main()
+EOF
+
+# Create updateUser.ts
+cat <<-EOF > /app/src/updateUser.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  //Insert here.
+  console.log(user)
+}
+
+main()
+EOF
+
+# Create updateUsers.ts
+cat <<-EOF > /app/src/updateUsers.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  //Insert here.
+  console.log(users)
+}
+
+main()
+EOF
+
+# Create updateUsers.ts
+cat <<-EOF > /app/src/deletePosts.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function findUserId() {
+  //Insert here to find userId
+  return(user!.id)
+}
+
+async function main() {
+  const userId = await findUserId()
+  //Insert here to delete posts.
+  console.log(posts)
+}
+
+main()
+EOF

@@ -1,0 +1,26 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Run Prisma Studio
+npx prisma studio &
+disown -h %1
+
+# Create new user
+cat <<-EOF > /app/.tmp/solveStudio.ts
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const user = await prisma.user.create({
+    data: {
+      email: 'mcleod@prisma.io',
+      name: 'Josh',
+    },
+  })
+  console.log(user)
+}
+
+main()
+EOF
+ts-node /app/.tmp/solveStudio.ts

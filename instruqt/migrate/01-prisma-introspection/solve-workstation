@@ -1,0 +1,20 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Initiate Prisma
+cd /app
+npx prisma init
+
+# Generate the initial schema file
+cat <<-EOF > /app/backend/prisma/schema.prisma
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_CONNECTION")
+}
+EOF
+
+# Perform Introspection
+npx prisma db pull
+
+# Generate the client
+npx prisma generate

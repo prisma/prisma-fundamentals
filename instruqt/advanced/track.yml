@@ -1,0 +1,16 @@
+slug: advanced-concepts
+type: track
+title: Advanced Concepts
+teaser: Apply advanced Prisma concepts
+description: Apply advanced Prisma concepts
+icon: ""
+tags:
+- Fundamentals
+owner: prisma
+developers:
+- carlson@prisma.io
+- adams@prisma.io
+- matteson@prisma.io
+private: false
+published: true
+skipping_enabled: true

@@ -1,0 +1,185 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Create .tmp directory
+mkdir -p /app/.tmp
+
+# Check that /app/src/readOne.ts still exists
+ls /app/src/readOne.ts || fail-message "Cannot find /app/src/readOne.ts"
+
+# Check that /app/src/readOne.ts returns correct information
+ts-node /app/src/readOne.ts | grep "id: 1" | grep "email: 'carlson@prisma.io'" | grep "name: 'Andrew'" || fail-message "readOne.ts did not return correct user"
+
+# Check that /app/src/readMany.ts still exists
+ls /app/src/readMany.ts || fail-message "Cannot find /app/src/readMany.ts"
+
+# Check that /app/src/readMany.ts returns correct information
+if [[ `ts-node /app/src/readMany.ts | grep prisma.io | wc -l` > 3 ]]; then echo "more than 3 users returned"; else echo "fail"; fi || fail-message "readMany.ts did not return more than three prisma.io users"
+
+# Check that /app/src/createUser.ts still exists
+ls /app/src/createUser.ts || fail-message "Cannot find /app/src/createUser.ts"
+
+# Check that /app/src/createuser.ts created the right User
+cat <<-EOF > /app/.tmp/checkCreateUser.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: 'student@prisma.io',
+    },
+  })
+console.log(user)
+}
+
+main()
+EOF
+if [[ `ts-node /app/.tmp/checkCreateUser.ts | grep -v 'null'` ]]; then echo "student@prisma.io found"; else ts-node /app/src/createUser.ts; fi || fail-message "Failed to execute createUser.ts"
+ts-node /app/.tmp/checkCreateUser.ts | grep -i -A10 -B10 "email: 'student@prisma.io'" | grep -i "name: 'Prisma Student'" || fail-message "'Prisma Student' user with email 'student@prisma.io' does not exist"
+
+# Check that /app/src/createPost.ts still exists
+ls /app/src/createPost.ts || fail-message "Cannot find /app/src/createPost.ts"
+
+# Check that /app/src/createPost.ts returns correct information
+ts-node /app/src/createPost.ts | grep -i 'Created with Prisma\|This was too easy' | wc -l | grep 2 || fail-message "createPost.ts did not return the correct information"
+
+# Check that /app/src/updateUser.ts still exists
+ls /app/src/updateUser.ts || fail-message "Cannot find /app/src/updateUser.ts"
+
+# Check that /app/src/updateUser.ts returns correct information
+ts-node /app/src/updateUser.ts | grep -i -A10 -B10 "email: 'cung@prisma.io'" | grep -i "name: 'Anita'" || fail-message "'Anita' is not the user set for user 'cung@prisma.io' does not exist"
+
+# Check that /app/src/updateUsers.ts still exists
+ls /app/src/updateUsers.ts || fail-message "Cannot find /app/src/updateUsers.ts"
+
+# Check that /app/src/updateUsers.ts returns correct information
+cat <<-EOF > /app/.tmp/checkUpdateUsers1.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const users = await prisma.user.updateMany({
+    where: {
+      email: {
+        contains: 'prisma.io',
+      },
+    },
+    data: {
+      role: 'VIEWER',
+    },
+  })
+  console.log(users)
+}
+
+main()
+EOF
+cat <<-EOF > /app/.tmp/checkUpdateUsers2.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const users = await prisma.user.findMany({
+    where: {
+      email: {
+        endsWith: "prisma.io"
+      },
+    },
+  })
+console.log(users)
+}
+
+main()
+EOF
+ts-node /app/.tmp/checkUpdateUsers1.ts || fail-message "Unable to reset all Prisma.io users to VIEWER Role to test updateUsers.ts"
+ts-node /app/src/updateUsers.ts || fail-message "Unable to execute updateUsers.ts"
+if [[ `ts-node /app/.tmp/checkUpdateUsers2.ts | grep "prisma.io" | wc -l` == `ts-node /app/.tmp/checkUpdateUsers2.ts | grep "prisma.io" | grep EDITOR | wc -l` ]]; then echo "equal"; else echo "not equal";  fi || fail-message "Not all prisma.io users have role EDITOR" 
+
+# Check that /app/src/deletePosts.ts returns correct information
+cat <<-EOF > /app/.tmp/checkDeletePosts1.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const user = await prisma.user.upsert({
+    where: {
+      email: 'matteson@prisma.io',
+    },
+    update: {
+      name: 'Chris',
+      email: 'matteson@prisma.io',
+      posts: {
+        create: [
+          {
+            title: 'Ask a question about Prisma on GitHub',
+            content: 'https://www.github.com/prisma/prisma/discussions',
+            published: true,
+            viewCount: 128,
+          },
+          {
+            title: 'Prisma on YouTube',
+            content: 'https://pris.ly/youtube',
+          },
+        ],
+      },
+    },
+    create: {
+      name: 'Chris',
+      email: 'matteson@prisma.io',
+      posts: {
+        create: [
+          {
+            title: 'Ask a question about Prisma on GitHub',
+            content: 'https://www.github.com/prisma/prisma/discussions',
+            published: true,
+            viewCount: 128,
+          },
+          {
+            title: 'Prisma on YouTube',
+            content: 'https://pris.ly/youtube',
+          },
+        ],
+      },
+    },
+  })
+  console.log(user)
+}
+
+main()
+EOF
+cat <<-EOF > /app/.tmp/checkDeletePosts2.ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function findUserId() {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: "matteson@prisma.io",
+    },
+  })
+  return(user!.id)
+}
+
+async function main() {
+  const userId = await findUserId()
+  const users = await prisma.post.findMany({
+    where: {
+      authorId: {
+        equals: userId
+      },
+    },
+  })
+console.log(users)
+}
+
+main()
+EOF
+
+ts-node /app/.tmp/checkDeletePosts1.ts || fail-message "Unable to reset posts for user matteson@prisma.io to test deletePosts.ts"
+ts-node /app/src/deletePosts.ts || fail-message "Unable to execute deletePosts.ts"
+ts-node /app/.tmp/checkDeletePosts2.ts | wc -m | grep "3" || fail-message "There are still posts for user matteson@prisma.io"

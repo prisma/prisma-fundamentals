@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Check that Prisma Generate has been run
+ls /app/node_modules/.prisma || fail-message "Prisma Client has not been generated"
+
+# Check that /app/src/index.ts exists
+ls /app/src/index.ts || fail-message "/app/src/index.ts does not exist"
+
+# Check that /app/src/index.ts is valid
+ts-node /app/src/index.ts || fail-message "/app/src/index.ts is not a valid Typescript file"
+
+# Check that PrismaClient has been imported in /app/src/index.ts
+grep @prisma/client /app/src/index.ts | grep PrismaClient || fail-message "Generated Prisma client not imported as PrismaClient"
+
+# Check that const prisma is created from PrismaClient
+grep PrismaClient /app/src/index.ts | grep prisma | grep new | grep const || fail-message "Const prisma created from PrismaClient not found"

@@ -1,0 +1,27 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Check that Prisma Studio is running
+# This doesn't seem to be working so I'm disabling
+#curl http://localhost:5555 || fail-message "Prisma Studio is not running!"
+
+# Check that user has been created
+# Create new user
+mkdir -p /app/.tmp
+cat <<-EOF > /app/.tmp/checkStudio.ts
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: 'mcleod@prisma.io',
+    },
+  })
+  console.log(user)
+}
+
+main()
+EOF
+ts-node /app/.tmp/checkStudio.ts | grep -v "null" || fail-message "mcleod@prisma.io user not found!"
