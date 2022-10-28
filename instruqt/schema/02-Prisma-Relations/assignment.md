@@ -8,10 +8,6 @@ tabs:
   type: service
   hostname: workstation
   port: 8080
-- title: App
-  type: service
-  hostname: workstation
-  port: 3000
 difficulty: basic
 timelimit: 600
 ---

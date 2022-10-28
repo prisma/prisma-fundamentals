@@ -7,7 +7,3 @@ containers:
   - 8080
   - 3000
   memory: 2048
-- name: mysql
-  image: mysql
-  ports:
-  - 3306

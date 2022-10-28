@@ -9,5 +9,7 @@ containers:
   memory: 2048
 - name: mysql
   image: mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: mysql
   ports:
   - 3306

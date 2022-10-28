@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Check that Prisma can read schema file
+cd /app
+cp /app/prisma/schema.prisma /tmp/schema.prisma
+npx prisma format --schema /tmp/schema.prisma
+diff /app/prisma/schema.prisma /tmp/schema.prisma || fail-message "Prisma Schema file not properly formatted"

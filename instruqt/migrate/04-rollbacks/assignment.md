@@ -1,6 +1,6 @@
 ---
-slug: prisma-introspection
-id: xvdoobcn6cdv
+slug: rollbacks
+id: fpytiaceghrt
 type: challenge
 title: Intro to Prisma Introspection
 notes:

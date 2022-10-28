@@ -2,12 +2,12 @@
 set -euxo pipefail
 
 # Check that Prisma can read schema file
-cd /app/backend/
+cd /app
 ls prisma/schema.prisma || fail-message "schema.prisma file not found"
 npx prisma format || fail-message "schema.prisma file cannot be parsed"
 
 # Check for generator
-cd prisma
+cd /app/prisma
 grep generator schema.prisma | grep client || fail-message "generator not configured correctly"
 grep prisma-client-js schema.prisma | grep provider || fail-message "generator not configured correctly"
 grep "../src/generated/client" schema.prisma | grep output || fail-message "generator not configured correctly"

@@ -197,7 +197,7 @@ cat <<-EOF >> /app/package.json
 EOF
 
 # Seed database
-npx prisma migrate dev -n dev &
+npx prisma migrate dev -n dev
 
 # Delete Prisma Client so students can generate it
 rm -rf /app/node_modules/.prisma

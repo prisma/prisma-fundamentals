@@ -1,5 +1,6 @@
 ---
 slug: seeding
+id: lbx3qcth3ek3
 type: challenge
 title: Intro to Prisma Migrate
 notes:

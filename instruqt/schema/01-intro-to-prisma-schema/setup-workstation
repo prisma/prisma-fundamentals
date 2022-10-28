@@ -9,9 +9,28 @@ do
     sleep 1
 done
 
-# Clone training repository
-git clone https://github.com/prisma/prisma-fundamentals.git
-mv ./prisma-fundamentals/example-app /app
+# Make app directory
+mkdir /app
+
+# Setup terminal
+mkdir /app/.vscode
+cat <<-EOF > /app/.vscode/terminals.json
+{
+    "autorun": true,
+    "autokill": true,
+    "terminals": [
+        {
+            "name": "TERMINAL",
+            "description": "For running commands",
+            "open": true,
+            "focus": false,
+            "commands": [
+                "cd /app/"
+            ]
+        }
+    ]
+}
+EOF
 
 # Add Prisma and Terminals VS Code Extensions
 code-server --install-extension prisma.prisma --user-data-dir /user-data
@@ -35,9 +54,7 @@ apt-get install -y nodejs
 # Install jq
 apt-get install -y jq
 
-# Remove schema file so students can recreate
-rm -rf /app/backend/prisma/
-
 # NPM Install
-cd /app/backend
-npm install
+cd /app/
+npm init -y
+npm install prisma

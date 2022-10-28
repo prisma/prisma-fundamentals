@@ -18,7 +18,7 @@ tabs:
   hostname: workstation
   port: 8080
 difficulty: basic
-timelimit: 6000
+timelimit: 600
 ---
 Steps
 ======

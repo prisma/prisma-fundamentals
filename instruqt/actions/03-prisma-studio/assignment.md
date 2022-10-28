@@ -19,7 +19,7 @@ tabs:
   hostname: workstation
   port: 5555
 difficulty: basic
-timelimit: 6000
+timelimit: 600
 ---
 Steps
 ======

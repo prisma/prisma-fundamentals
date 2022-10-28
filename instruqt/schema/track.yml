@@ -1,6 +1,5 @@
 slug: prisma-schema
 id: w7xs61whycrw
-type: track
 title: Prisma Schema
 teaser: Apply concepts of the Prisma Schema
 description: Apply concepts of the Prisma Schema
@@ -15,4 +14,4 @@ developers:
 private: false
 published: true
 skipping_enabled: true
-checksum: "5795869260054021003"
+checksum: "17100901526377952125"

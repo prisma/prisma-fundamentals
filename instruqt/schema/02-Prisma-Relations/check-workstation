@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 # Check that Prisma can read schema file
-cd /app/backend/
+cd /app
 ls prisma/schema.prisma || fail-message "schema.prisma file not found"
 npx prisma format || fail-message "schema.prisma file cannot be parsed"
 
@@ -27,7 +27,7 @@ cat <<-EOF > /tmp/package.json
 EOF
 cd /tmp
 npm install
-cd /app/backend
+cd /app
 node /tmp/returnDMMF.js > /tmp/DMMF.json
 
 # Check Post model

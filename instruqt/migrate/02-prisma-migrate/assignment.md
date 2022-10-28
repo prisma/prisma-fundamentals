@@ -1,5 +1,6 @@
 ---
 slug: prisma-migrate
+id: wkkapp5fyv1u
 type: challenge
 title: Intro to Prisma Migrate
 notes:

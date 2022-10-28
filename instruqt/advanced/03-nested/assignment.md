@@ -1,6 +1,5 @@
 ---
-slug: intro-to-prisma-schema
-id: dh8nvhpvbvpz
+slug: advanced-concepts
 type: challenge
 title: Intro to Prisma Schema
 notes:
@@ -26,13 +25,17 @@ tabs:
   type: service
   hostname: workstation
   port: 8080
+- title: App
+  type: service
+  hostname: workstation
+  port: 3000
 difficulty: basic
 timelimit: 600
 ---
 Steps
 ======
 1. Use the proper CLI command to create a new schema file. Docs: [Command Reference](https://www.prisma.io/docs/reference/api-reference/command-reference)
-1. Edit the new schema file with VS Code and review the precreated definitions. Notice that the generator defaults to using the correct "prisma-client-js" provider. Now update the Prisma Schema so that the Prisma Client will output to a folder named "generated/client/" inside the "/app/src" directory". Update the datasource definition to use a MySQL database with a url coming from the environment variable DATABASE_CONNECTION.. Docs: [Generating the Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client) [MySQL](https://www.prisma.io/docs/concepts/database-connectors/mysql)
+1. Edit the new schema file with VS Code and review the precreated definitions. Notice that the generator defaults to using the correct "prisma-client-js" provider. Now update the Prisma Schema so that the Prisma Client will output to a folder named "generated/client/" inside the "backend/src" directory". Update the datasource definition to use a MySQL database with a url coming from the environment variable DATABASE_CONNECTION.. Docs: [Generating the Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client) [MySQL](https://www.prisma.io/docs/concepts/database-connectors/mysql)
 1. Create a model for "User" with the following fields:
 | Field Name | Type   | Attributes           |
 |------------|--------|----------------------|
