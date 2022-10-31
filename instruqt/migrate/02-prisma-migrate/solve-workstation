@@ -1,3 +1,29 @@
 #!/bin/bash
 set -euxo pipefail
 
+# Setup initial database
+npx prisma migrate dev -n dev
+
+# Update schema file
+cat <<-EOF >> /app/prisma/schema.prisma
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+}
+EOF
+sed -i '/^model Post {.*/a   Comment     Comment[]' /app/prisma/schema.prisma
+sed -i '/^model User {.*/a   Comment     Comment[]' /app/prisma/schema.prisma
+npx prisma format
+
+# Run migration
+npx prisma migrate dev -n migrate
+
+# Update connection string to production
+export DATABASE_CONNECTION=mysql://root:mysql@mysql-prod:3306/mydb
+
+# Deploy to production
+npx prisma migrate deploy

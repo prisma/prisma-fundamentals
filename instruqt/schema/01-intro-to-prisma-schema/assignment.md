@@ -34,10 +34,9 @@ Steps
 1. Use the proper CLI command to create a new schema file. Docs: [Command Reference](https://www.prisma.io/docs/reference/api-reference/command-reference)
 1. Edit the new schema file with VS Code and review the precreated definitions. Notice that the generator defaults to using the correct "prisma-client-js" provider. Now update the Prisma Schema so that the Prisma Client will output to a folder named "generated/client/" inside the "/app/src" directory". Update the datasource definition to use a MySQL database with a url coming from the environment variable DATABASE_CONNECTION.. Docs: [Generating the Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client) [MySQL](https://www.prisma.io/docs/concepts/database-connectors/mysql)
 1. Create a model for "User" with the following fields:
-| Field Name | Type   | Attributes           |
-|------------|--------|----------------------|
-| id         | Int    | id and autoincrement |
-| email      | String | unique               |
-| name       | String | optional             |
-
-Docs: [Data Model](https://www.prisma.io/docs/concepts/components/prisma-schema/data-model)
+    | Field Name | Type   | Attributes           |
+    |------------|--------|----------------------|
+    | id         | Int    | id and autoincrement |
+    | email      | String | unique               |
+    | name       | String | optional             |
+    Docs: [Data Model](https://www.prisma.io/docs/concepts/components/prisma-schema/data-model)

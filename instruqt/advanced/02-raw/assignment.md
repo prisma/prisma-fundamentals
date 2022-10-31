@@ -1,5 +1,6 @@
 ---
-slug: advanced-concepts
+slug: raw
+id: pv0vzp2xyanh
 type: challenge
 title: Intro to Prisma Schema
 notes:

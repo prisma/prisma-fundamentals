@@ -105,8 +105,8 @@ EOF
 mkdir /app/src
 
 # Export Connection String
-export DATABASE_CONNECTION=mysql://root:mysql@mysql:3306/mydb
-echo 'export DATABASE_CONNECTION=mysql://root:mysql@mysql:3306/mydb' >> ~/.bashrc
+export DATABASE_CONNECTION=mysql://root:mysql@mysql-dev:3306/mydb
+echo 'export DATABASE_CONNECTION=mysql://root:mysql@mysql-dev:3306/mydb' >> ~/.bashrc
 
 # Generate Client
 npx prisma generate
@@ -187,17 +187,18 @@ main()
 EOF
 
 # Create seed script in package.json
-truncate -s-3 /app/package.json
-cat <<-EOF >> /app/package.json
-,
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  }
-}
-EOF
+#truncate -s-3 /app/package.json
+#cat <<-EOF >> /app/package.json
+#,
+#  "prisma": {
+#    "seed": "ts-node prisma/seed.ts"
+#  }
+#}
+#EOF
 
 # Seed database
-npx prisma migrate dev -n dev &
+npx prisma migrate dev -n dev
+ts-node /app/prisma/seed.ts
 
 # Delete Prisma Client so students can generate it
 rm -rf /app/node_modules/.prisma

@@ -1,6 +1,6 @@
 ---
-slug: logging-and-debugging
-id: mwviz3ye70uu
+slug: advanced-concepts
+id: xuvfxgomm6vg
 type: challenge
 title: Intro to Prisma Schema
 notes:

@@ -23,7 +23,5 @@ timelimit: 600
 Steps
 ======
 1. Review the Prisma schema file in the Prisma directory to perform the following tasks.
-1. Generate the Prisma Client from the command line.
-Docs: [Generating the Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client)
-1. Create an index.ts file in the /app/src directory. Import the Prisma Client from the directory in which it's generated and create a new const 'prisma' with this client.
-Docs: [Importing Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client#importing-prisma-client)
+1. Generate the Prisma Client from the command line. Docs: [Generating the Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client)
+1. Create an index.ts file in the /app/src directory. Import the Prisma Client from the directory in which it's generated and create a new const 'prisma' with this client. Docs: [Importing Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client#importing-prisma-client)

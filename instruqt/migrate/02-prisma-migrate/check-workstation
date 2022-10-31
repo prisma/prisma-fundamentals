@@ -1,3 +1,18 @@
 #!/bin/bash
 set -euxo pipefail
 
+# Check that Prisma can read schema file
+cd /app
+ls prisma/schema.prisma || fail-message "schema.prisma file not found"
+npx prisma format || fail-message "schema.prisma file cannot be parsed"
+
+# Check that there are two migrations (plus a lock file and header)
+ls -l /app/prisma/migrations/ | wc -l || fail-message "Two migrations not found"
+
+# Check that comment model has been added
+grep -i Comment /app/prisma/schema.prisma | grep model || fail-message "Comment model not found"
+#TODO: Impliment additional tests
+
+# Check deployment in prod
+export DATABASE_CONNECTION=mysql://root:mysql@mysql-prod:3306/mydb
+#TODO: Impliment this check.

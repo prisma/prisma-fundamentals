@@ -1,5 +1,6 @@
 ---
-slug: advanced-concepts
+slug: nested
+id: ul08kzgssbc3
 type: challenge
 title: Intro to Prisma Schema
 notes:

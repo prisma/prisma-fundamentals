@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euxo pipefail
+
+mysql --password=mysql mydb -e 'DROP DATABASE mydb'

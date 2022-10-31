@@ -1,5 +1,5 @@
 slug: advanced-concepts
-type: track
+id: i5etfvzsqchc
 title: Advanced Concepts
 teaser: Apply advanced Prisma concepts
 description: Apply advanced Prisma concepts
@@ -14,3 +14,4 @@ developers:
 private: false
 published: true
 skipping_enabled: true
+checksum: "13849985493252855486"

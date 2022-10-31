@@ -1,3 +1,66 @@
 #!/bin/bash
 set -euxo pipefail
 
+# Create seed script
+cat <<-'EOF' > /app/prisma/seed.ts
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+async function main() {
+  const rich = await prisma.user.upsert({
+    where: { email: 'rich@prisma.io' },
+    update: {},
+    create: {
+      email: 'rich@prisma.io',
+      name: 'Rich',
+      posts: {
+        create: {
+          title: 'What's new in Prisma',
+          content: 'https://www.prisma.io/blog/wnip-q2-2022-pmn7rulcj8x'',
+          published: true,
+        },
+      },
+    },
+  })
+  const jan = await prisma.user.upsert({
+    where: { email: 'jan@prisma.io' },
+    update: {},
+    create: {
+      email: 'jan@prisma.io',
+      name: 'Jan',
+      posts: {
+        create: [
+          {
+            title: 'Check out Prisma with Next.js',
+            content: 'https://www.prisma.io/nextjs',
+            published: true,
+          },
+        ],
+      },
+    },
+  })
+  console.log({ rich, jan })
+}
+main()
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
+EOF
+
+# Create seed script in package.json
+truncate -s-3 /app/package.json
+cat <<-EOF >> /app/package.json
+,
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}
+EOF
+
+# Reset and seed database
+cd /app
+npx prisma migrate dev -n dev

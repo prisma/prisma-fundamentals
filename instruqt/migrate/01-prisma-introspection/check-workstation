@@ -1,3 +1,12 @@
 #!/bin/bash
 set -euxo pipefail
 
+# Check that Prisma can read schema file
+cd /app
+ls prisma/schema.prisma || fail-message "schema.prisma file not found"
+npx prisma format || fail-message "schema.prisma file cannot be parsed"
+
+# Check for models
+grep -i User /app/prisma/schema.prisma | grep model || fail-message "User model not found"
+grep -i Post /app/prisma/schema.prisma | grep model || fail-message "Post model not found"
+grep -i User_role /app/prisma/schema.prisma | grep enum || fail-message "User_role enum found"

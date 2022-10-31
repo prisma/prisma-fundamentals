@@ -26,9 +26,9 @@ Steps
 1. Review the Prisma schema file in the Prisma directory to perform the following tasks.
 1. Initiate Prisma Studio and browse data. Ignore the new window the pops up and use the tab labeled 'Studio' Docs: [Prisma Studio](https://www.prisma.io/docs/concepts/components/prisma-studio)
 1. Create a new user in Prisma Studio with the following information:
-| Field Name | Attributes           |
-|------------|----------------------|
-| email      | mcleod@prisma.io     |
-| name       | Josh                 |
-
+    | Field Name | Attributes           |
+    |------------|----------------------|
+    | email      | mcleod@prisma.io     |
+    | name       | Josh                 |
+    Docs: [Prisma Studio](https://www.prisma.io/docs/concepts/components/prisma-studio)
 
